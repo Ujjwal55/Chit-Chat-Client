@@ -1,10 +1,19 @@
 import axios from "axios";
 import { getMeACookie } from "./helper";
+import { IAxiosErrorResponse, ILoginData } from "@/lib/types/types";
+import { toast } from "react-toastify";
 
 const BASE_URL = "http://localhost:8000/api/v1";
 
 
 let authToken = getMeACookie("chat-auth") || "";
+
+interface LoginResponse { 
+  userName: string,
+  userId: string,
+  authToken: string,
+  message: string
+}
 
 const axiosInstance = axios.create({
     baseURL: BASE_URL,
@@ -21,8 +30,13 @@ export const getUserProfile = async () => {
 }
 
 
-export const loginUser = async (userName: string, password: string) => {
-  return (await axiosInstance.post("/user/login", {userName, password})).data
+export const loginUser = async (userName: string, password: string): Promise<ILoginData>  => {
+  try {
+    const response = await axiosInstance.post<ILoginData>('/user/login', { userName, password });
+    return response.data;
+  } catch (error: IAxiosErrorResponse | unknown) {
+    throw error;
+  }
 }
 
 export const registerUser = async (fullName: string, userName: string, email: string, password: string) => {
@@ -30,7 +44,12 @@ export const registerUser = async (fullName: string, userName: string, email: st
 }
 
 export const logOutUser = async (userId: string) => {
-  return (await axiosInstance.post(`/user/logout/${userId}`)).data
+  console.log("userIddddd", userId);
+  try {
+    return (await axiosInstance.post(`/user/logout/${userId}`)).data
+  } catch (error: IAxiosErrorResponse | unknown) {
+    throw error;
+  }
 }
 
 
@@ -73,6 +92,15 @@ export const respondFriendRequest = async (friendshipId: string, response: strin
     return (await axiosInstance.post(`friend/respond-request`, {
       friendshipId, response
     }))?.data;
+  } catch (error: any) {
+    throw new Error("Error: " + error.message);
+  }
+}
+
+export const getChatDetails = async (chatId) => {
+  console.log("inside chatttttttt", chatId);
+  try {
+    return (await axiosInstance.get(`chat/${chatId}`))?.data;
   } catch (error: any) {
     throw new Error("Error: " + error.message);
   }

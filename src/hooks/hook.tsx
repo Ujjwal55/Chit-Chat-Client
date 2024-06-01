@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { toast } from '../components/ui/use-toast';
 interface ErrorObject {
     isError?: boolean;
     error: Error | { message: string };

@@ -1,7 +1,8 @@
 import Link from "next/link";
-import React, { memo } from "react";
+import React, { memo, useContext, useState } from "react";
 import Image from "next/image";
 import { RxAvatar } from "react-icons/rx";
+import { useSelectChat } from "@/redux/store";
 
 interface IChatItem {
   name: string;
@@ -26,9 +27,11 @@ const ChatItem = ({
   profileImageURL = "",
   handleDeleteChat,
 }: IChatItem) => {
+  const {setSelectedChat} = useSelectChat();
   return (
-    <Link href={`/chat/${chatId}`} className="">
-      <div className="flex p-3 gap-2 rounded-[20px] items-center">
+      <div className="flex p-3 gap-2 rounded-[20px] items-center cursor-pointer" onClick={() => {
+        setSelectedChat(chatId);
+      }}>
         <div>
           {profileImageURL ? (
             <Image
@@ -45,7 +48,6 @@ const ChatItem = ({
         </div>
         <div>{name}</div>
       </div>
-    </Link>
   );
 };
 

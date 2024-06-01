@@ -12,13 +12,13 @@ import NewChat from './new-chat/NewChat'
 import NewGroup from './new-group/NewGroup'
 import FriendShip from './friendship/FriendShip'
 import { toast } from './ui/use-toast'
-import useAuthStore from '@/store/store'
 import { useLogOutUser } from '@/services/mutation'
 import Notification from './notification/Notification'
+// import { useAuthStore } from '@/redux/store'
 
 
 const NavBar = () => {
-  const {user} = useAuthStore((state) => state);
+  // const {user} = useAuthStore((state) => state);
   const logOutUserMutation = useLogOutUser();
   const [search, setSearch] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
@@ -87,7 +87,7 @@ const NavBar = () => {
             }}/>
             <IoIosLogOut size={25} color='white' className='cursor-pointer' onClick={
               () => {
-                logOutUserMutation.mutate(user?._id);
+                // logOutUserMutation.mutate(user?._id);
               }
             }/>
         </div>

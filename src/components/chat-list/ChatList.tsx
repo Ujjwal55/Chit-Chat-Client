@@ -22,8 +22,8 @@ const ChatList = () => {
   if(chats?.length === 0) return <div>No chats</div>
   return (
         chats?.map((chat: IChat) => {
-            const { _id, name, lastMessage, groupChat, members} = chat;
-            <ChatItem name={name} chatId={_id} groupChat/>
+            const { _id, chatName, lastMessage, groupChat, members} = chat;
+            return <ChatItem name={chatName} chatId={_id} groupChat/>
         })
   )
 }

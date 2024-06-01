@@ -67,11 +67,37 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "zoom-fade": {
+          "0%, 100%": { transform: "scale(1.02)" },
+          "50%": { transform: "scale(1)" },
+        },
+        "slide-in": {
+          "0%": {
+            top: "40%",
+            opacity: "0"
+          },
+          "30%": {
+            transform: "scale(1.2)",
+            opacity: "1"
+          },
+          "100%": {
+            top: "15%",
+            opacity: "0"
+          }
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "zoom-fade": "zoom-fade 0.5s ease-in-out",
+        "slide-in": "slide-in 1.5s ease-in-out",
       },
+      transitionDuration: {
+        "5000": "5000ms"
+      },
+      opacity: {
+        "0.75": "0.75"
+      }
     },
   },
   plugins: [require("tailwindcss-animate")],
