@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation'
 import SubHeader from '@/components/sub-header/SubHeader'
 import { useDispatch, useSelector } from 'react-redux'
 import { setUserProfile } from '@/redux/slices/authSlice'
+import ChatMenu from '@/components/chat/chat-menu/ChatMenu'
 
 export default function Chat () {
     const {data, error, isSuccess} = useGetUserProfile();
@@ -24,6 +25,7 @@ export default function Chat () {
     <SocketProvider>
     <div className='h-screen'>
       <SubHeader/>
+      <ChatMenu/>
     </div>
     </SocketProvider>
   )
