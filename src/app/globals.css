@@ -75,7 +75,6 @@
       radial-gradient(farthest-side at 50% -33.33%,#0000 52%,rgba(183, 153, 132, 0.4) 54% 57%,#0000 59%),
       #b56251;
 background-size: calc(264px/4.667) 264px,264px calc(264px/4.667);
-
   }
 }
 
@@ -86,5 +85,39 @@ background-size: calc(264px/4.667) 264px,264px calc(264px/4.667);
   }
   body {
     @apply bg-background text-foreground;
+    box-sizing: border-box;
+  }
+  .notification-badge {
+    position: absolute;
+    top: 1px;
+    right: 2px;
+    z-index: 100;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 1.5em;
+  }
+  .chat-list-container::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge, and Firefox */
+  .chat-list-container {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .messages-container::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge, and Firefox */
+  .messages-container {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
 }

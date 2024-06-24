@@ -2,7 +2,7 @@ import { IUser } from "@/lib/types/types";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 
-const initialState: number = 3
+const initialState: number = 1
   
   
 

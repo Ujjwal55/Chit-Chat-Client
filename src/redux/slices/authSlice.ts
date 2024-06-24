@@ -3,12 +3,12 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface IAuthSlice {
     isLoggedIn: boolean;
-    user: any;
+    user: IUser | null;
 }
 
 const initialState: IAuthSlice = {
     isLoggedIn: false,
-    user: [],
+    user: null,
 };
   
   

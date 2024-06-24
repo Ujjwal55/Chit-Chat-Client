@@ -30,6 +30,7 @@ export const getUserProfile = async () => {
 }
 
 
+
 export const loginUser = async (userName: string, password: string): Promise<ILoginData>  => {
   try {
     const response = await axiosInstance.post<ILoginData>('/user/login', { userName, password });
@@ -39,8 +40,12 @@ export const loginUser = async (userName: string, password: string): Promise<ILo
   }
 }
 
-export const registerUser = async (fullName: string, userName: string, email: string, password: string) => {
-  return (await axiosInstance.post("/user/register", {fullName, userName, email, password})).data
+export const registerUser = async (formData: FormData) => {
+  return (await axiosInstance.post("/user/register", formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })).data
 }
 
 export const logOutUser = async (userId: string) => {
@@ -52,16 +57,30 @@ export const logOutUser = async (userId: string) => {
   }
 }
 
+export const updateUserProfile = async (formData: FormData) => {
+  try {
+    return (await axiosInstance.patch("/user/patch", formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })).data
+  } catch (error: any) {
+    throw new Error("Error: " + error.message);
+  }
+}
+
+
 
 export const getUserChats = async () => {
   try {
-    return (await axiosInstance.get("/chat/chats"))?.data;
+    return (await axiosInstance.get("/chat/chats"))?.data?.data;
   } catch (error: any) {
     throw new Error("Error: " + error.message);
   }
 }
 
 export const getSearchUser = async (searchTerm: string) => {
+  console.log("inside search user", searchTerm);
   try {
     return (await axiosInstance.get(`user/search-user/${searchTerm}`))?.data;
   } catch (error: any) {
@@ -79,9 +98,10 @@ export const sendFriendRequest = async (friendId: string) => {
   }
 }
 
-export const getNotificiations = async () => {
+
+export const getFriendRequest = async () => {
   try {
-    return (await axiosInstance.get(`user/notifications`))?.data;
+    return (await axiosInstance.get(`friend/requests`))?.data?.data;
   } catch (error: any) {
     throw new Error("Error: " + error.message);
   }
@@ -97,11 +117,63 @@ export const respondFriendRequest = async (friendshipId: string, response: strin
   }
 }
 
-export const getChatDetails = async (chatId) => {
-  console.log("inside chatttttttt", chatId);
+export const getsearchFriend = async (searchTerm: string) => {
+  try {
+    return (await axiosInstance.get(`friend/search-friend/${searchTerm}`))?.data?.data;
+  } catch (error: any) {
+    throw new Error("Error: " + error.message);
+  }
+}
+
+export const getChatDetails = async (chatId: string) => {
   try {
     return (await axiosInstance.get(`chat/${chatId}`))?.data;
   } catch (error: any) {
     throw new Error("Error: " + error.message);
+  }
+}
+
+export const getChatMessages = async (chatId: string) => {
+  try {
+    return (await axiosInstance.get(`chat/message/${chatId}`))?.data?.data;
+  } catch (error: any) {
+    throw new Error("Error: " + error.message);
+  }
+}
+
+// add messages
+
+export const addChatMessages = async (senderId: string, message: string, chatId: string) => {
+  try {
+    return (await axiosInstance.post(`chat/add/${senderId}`, {
+      message,
+      chatId
+    }))?.data?.data;
+  } catch (error: any) {
+    throw new Error("Error: " + error.message);
+  }
+}
+
+export const addChatAttachements = async (senderId: string, formData: FormData) => {
+  try {
+    return (await axiosInstance.post(`chat/add/attachment/${senderId}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }))?.data?.data;
+  } catch (error: any) {
+    throw new Error("Error: " + error.message);
+  }
+}
+
+
+
+export const createNewGroup = async (name: string, members: Array<string>) => {
+  try {
+    return (await axiosInstance.post(`chat/new`, {
+      name, members
+    }))?.data;
+  } catch (error: IAxiosErrorResponse | unknown) {
+    throw error;
   }
 }

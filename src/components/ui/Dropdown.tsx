@@ -9,14 +9,14 @@ interface IDropdownComponent {
 const DropdownComponent = ({isOpen, options, onClick, dropdownStyles}: IDropdownComponent) => {
     
 
-    const handleOptionClick = (option) => {
+    const handleOptionClick = (option: any) => {
         onClick(option);
     };
 
     return (
         <div className={`absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ${isOpen ? 'block' : 'hidden'}`} style={dropdownStyles}>
             <div className="py-1">
-                {options.map((option) => (
+                {options.map((option: any) => (
                     <button
                         key={option.key}
                         onClick={() => handleOptionClick(option)}

@@ -5,20 +5,17 @@ interface ErrorObject {
     fallback?: () => void;
 }
 
-export const useErrors = (errors: ErrorObject[]) => {
+
+export const useSocketEvents = (socket: any, eventHandler: any) => {
     useEffect(() => {
-        errors.forEach(({ isError = true, error, fallback }) => {
-            if (isError) {
-                if (fallback && typeof fallback === 'function') {
-                    fallback();
-                } else {
-                    const errorMessage = error instanceof Error ? error.message : 'Something went wrong!';
-                    toast({
-                        variant: 'destructive',
-                        description: errorMessage
-                    });
-                }
-            }
+        Object.keys(eventHandler).forEach((event) => {
+          socket.on(event, eventHandler[event]);
         });
-    }, [errors]);
-};
+    
+        return () => {
+          Object.keys(eventHandler).forEach((event) => {
+            socket.off(event, eventHandler[event]);
+          });
+        }
+      }, [eventHandler])
+}

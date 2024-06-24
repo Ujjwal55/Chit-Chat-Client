@@ -1,15 +1,20 @@
-import React, { useState } from 'react'
+import React, { SetStateAction, useState } from 'react'
 import Modal from '../ui/Modal'
 import { userFriends } from '@/mock/friendData';
 
-const NewGroup = ({isModalOpen, setIsModalOpen}) => {
+interface INewGroup {
+  isModalOpen: boolean;
+  setIsModalOpen: React.Dispatch<SetStateAction<boolean>>;
+}
+
+const NewGroup = ({isModalOpen, setIsModalOpen}: INewGroup) => {
   const friends = userFriends;
-  const [selectedFriends, setSelectedFriends] = useState([]);
+  const [selectedFriends, setSelectedFriends] = useState<Array<string>>([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [groupName, setGroupName] = useState('');
     const [isFocused, setIsFocused] = useState(false);
 
-    const handleFriendClick = (friendId) => {
+    const handleFriendClick = (friendId: string) => {
         if (selectedFriends.includes(friendId)) {
             setSelectedFriends(selectedFriends.filter(id => id !== friendId));
         } else {
@@ -17,7 +22,7 @@ const NewGroup = ({isModalOpen, setIsModalOpen}) => {
         }
     };
 
-    const handleSearchChange = (e) => {
+    const handleSearchChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
         setSearchQuery(e.target.value);
     };
 
@@ -33,7 +38,7 @@ const NewGroup = ({isModalOpen, setIsModalOpen}) => {
       setIsFocused(false);
   };
 
-    const handleGroupNameChange = (e) => {
+    const handleGroupNameChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
       setGroupName(e.target.value);
   };
   return (

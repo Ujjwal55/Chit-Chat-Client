@@ -1,6 +1,5 @@
 import React from "react";
 import { HiChevronDoubleRight } from "react-icons/hi";
-import Button from "../ui/Button";
 import { motion } from 'framer-motion';
 import { useRouter } from "next/navigation";
 import Image from "next/image";
